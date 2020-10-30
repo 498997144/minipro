@@ -33,6 +33,7 @@ App({
       }
     })
   },
+  secret_key:'d9c1a51e3bb51ac3a631a4e294f11258',
   globalData: {
     userInfo: null
   }
