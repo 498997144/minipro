@@ -1,0 +1,11 @@
+<template name="products">
+  <view class="products-list">
+    <view class="products-item" wx:for="{{recentList}}" wx:key="index" data-id="{{item.id}}" bindtap="goProductDetail">
+      <image src="{{item.main_img_url}}"></image>
+      <view class="desc">
+        <text class="name">{{item.name}}</text>
+        <text class="price">¥{{item.price}}</text>
+      </view>
+    </view>
+  </view>
+</template>

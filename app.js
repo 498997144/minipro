@@ -1,11 +1,10 @@
-//app.js
-App({
-  onLaunch: function () {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
 
+//app.js
+import { get, post } from './utils/request.js'
+
+App({
+  onLaunch () {
+    
     // 登录
     wx.login({
       success: res => {
@@ -33,8 +32,17 @@ App({
       }
     })
   },
-  secret_key:'d9c1a51e3bb51ac3a631a4e294f11258',
+  
   globalData: {
     userInfo: null
-  }
+  },
+
+
+
+
+
+  secret_key: 'd9c1a51e3bb51ac3a631a4e294f11258',
+  get,
+  post,
+
 })

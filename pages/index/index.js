@@ -1,77 +1,70 @@
 //index.js
 //获取应用实例
 const app = getApp()
-const baseUrl = 'http://z.cn/api/v1/'
+
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    bannerList: [],
+    themeList: [],
+    recentList:[],
   },
-  //事件处理函数
-  bindViewTap: function () {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
-  onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
 
+  // 页面加载时
+  onLoad() {
+
+    // 登陆成功保存token
     wx.login({
       timeout: 5000,
-      success: (response) => {
-        const {
-          code
-        } = response
-        console.log(code)
-        wx.request({
-          url: baseUrl + 'token/user',
-          data: {
-            code
-          },
-          method: 'POST',
-          success: (response) => {
-            console.log(response)
-          },
-          fail: (response) => {
-            console.log('error', response)
-          },
-        })
+      success: async (res) => {
+        const {  code } = res
+        let { statusCode, data } = await app.post('token/user', { code })
+        if (statusCode === 200) {
+          wx.setStorageSync('toke', data.token)
+        }
+
       },
     })
+
+
+    
+    this.getBanner()
+    this.getTheme()
+    this.getRecent()
+
   },
-  getUserInfo: function (e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+
+  // 跳转至产品祥情页
+  goProductDetail(event){ 
+    let {id} = event.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/product/product?id='+id,
     })
+    
+  },
+   // 跳转至主题祥情页
+  goThemeDetail(event){
+    let {id,name} = event.currentTarget.dataset
+    wx.navigateTo({
+      url: `/pages/theme/theme?id=${id}&name=${name}`,
+    })
+  },
+ 
+  // 获取轮播图
+  async getBanner() {
+    let { statusCode, data } = await app.get('banner/1')
+    if (statusCode === 200) this.setData({ bannerList: data.items })
+  },
+
+  // 获取主题
+  async getTheme() {
+    let { statusCode, data } = await app.get('theme?ids=1,2,3')
+    if (statusCode === 200) this.setData({themeList: data})
+  },
+
+  // 获取最近新品
+  async getRecent(){
+    let {statusCode,data} = await app.get('product/recent')
+    if (statusCode === 200) this.setData({recentList: data})
   }
+
 })

@@ -1,7 +1,75 @@
-.container {
-  background-color: black;
+.products-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 20rpx;
 }
-.container image {
-  width: 50rpx;
-  height: 50rpx;
+.products-list .products-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10rpx;
+  width: 350rpx;
+  height: 320rpx;
+  background-color: #eeeeee;
+}
+.products-list .products-item image {
+  display: block;
+  width: 200rpx;
+  height: 200rpx;
+  margin: 0 auto;
+}
+.products-list .products-item .desc {
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.products-list .products-item .desc text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.products-list .products-item .desc .price {
+  color: red;
+}
+.container .swiper {
+  width: 750rpx;
+  height: 400rpx;
+}
+.container .swiper image {
+  width: 750rpx;
+  height: 400rpx;
+}
+.container .theme .theme-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
+  color: burlywood;
+  height: 100rpx;
+  font-weight: 600;
+}
+.container .theme .theme-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.container .theme .theme-list .theme-item image {
+  width: 375rpx;
+  height: 375rpx;
+}
+.container .theme .theme-list .theme-item:last-child image {
+  width: 750rpx;
+  height: 400rpx;
+}
+.container .recent .recent-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
+  color: burlywood;
+  height: 100rpx;
+  font-weight: 600;
 }

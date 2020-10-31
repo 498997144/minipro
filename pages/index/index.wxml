@@ -1,14 +1,29 @@
 <!--index.wxml-->
+<import src="/template/products/products.wxml"></import>
+
 <view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+
+  <swiper class="swiper" indicator-dots="true" autoplay="true" interval="2000">
+    <block wx:for="{{bannerList}}" wx:key="index">
+      <swiper-item data-id="{{item.key_word}}" bindtap="goProductDetail">
+        <image src="{{item.img.url}}"></image>
+      </swiper-item>
     </block>
+  </swiper>
+
+  <view class="theme">
+    <view class="theme-title">精选主题</view>
+    <view class="theme-list">
+      <view class="theme-item" wx:for="{{themeList}}" wx:key="index" data-id="{{item.id}}" data-name="{{item.name}}" bindtap="goThemeDetail">
+        <image src="{{ item.topic_img.url }}"></image>
+      </view>
+    </view>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-    
+
+  <view class="recent">
+    <view class="recent-title">最近新品</view>
+    <template is="products" data="{{recentList:recentList}}"></template>
   </view>
+
+
 </view>
