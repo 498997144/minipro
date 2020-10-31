@@ -1,4 +1,9 @@
 <!--pages/theme/theme.wxml-->
+<import src="/template/products/products.wxml"></import>
+
 <view class="container">
-  
+  <view class="header">
+    <image src="{{head_img.url}}"></image>
+  </view>
+  <template is="products" data="{{recentList:productList}}"></template>
 </view>

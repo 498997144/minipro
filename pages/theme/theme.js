@@ -1,4 +1,5 @@
 // pages/theme/theme.js
+const app = getApp()
 Page({
 
   /**
@@ -7,6 +8,10 @@ Page({
   data: {
     id : '',
     name:'',
+    productList:[],
+    head_img:{},
+    topic_img:{},
+
   },
 
   /**
@@ -16,54 +21,31 @@ Page({
   
     this.data.id = id
     this.data.name = name
+
+    this.getProductList(id)
+    
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
 
+  onReady(){
+    wx.setNavigationBarTitle({title:this.data.name})
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
 
+  // 跳转至产品祥情页
+  goProductDetail(event){ 
+    let {id} = event.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/product/product?id='+id,
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  // 获取对应主题下的商品列表
+  async getProductList(id){
+    let {statusCode,data} = await app.get('theme/'+id)
+    if(statusCode === 200)  this.setData({
+      head_img:data.head_img,
+      topic_img:data.topic_img,
+      productList:data.products
+    })  
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

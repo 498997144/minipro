@@ -1,4 +1,5 @@
 <!--pages/product/product.wxml-->
 <view class="container">
-  
+  <view class="top-box"></view>
+  <view class="bottom-box"></view>
 </view>
